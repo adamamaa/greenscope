@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scope AI - Aurora Insights</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;height:100%;
+              font-family:'Pretendard', -apple-system, BlinkMacSystemFont, 'system-ui', 'Roboto', 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+              color:#F3F4F6;
+              overflow-x: hidden;
+              background: #0f172a;
+            }
+
+    .hero-section {
+        width:100%;height:100%;
+        display:flex;justify-content:center;align-items:center;padding:1rem; overflow-y: auto;
+        position: relative;
+        z-index: 10;
+    }
+
+    .glass-card{
+      max-width:460px;width:100%;padding:1.75rem 1.25rem;text-align:center;
+      background:rgba(15, 23, 42, 0.8);
+      border:1px solid rgba(255, 255, 255, 0.1);
+      border-radius:28px;
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      box-shadow:0 24px 48px rgba(0,0,0,0.5);
+      animation:fadeUp .9s cubic-bezier(.2,.8,.4,1) .25s both;
+      position: relative;
+      z-index: 20;
+    }
+    
+    @media (min-width: 640px) {
+      .glass-card {
+        padding: 2.5rem 2.75rem;
+      }
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(40px)}
+      to  {opacity:1;transform:translateY(0)}
+    }
+
+    h1.input-page-title {
+        margin:0 0 .35rem;font-size:1.85rem;font-weight:900; color: #F3F4F6;
+        letter-spacing: -0.05em;
+    }
+    @media (min-width: 640px) {
+      h1.input-page-title { font-size: 2.5rem; }
+    }
+    
+    p.input-page-subtitle {
+        margin:0 0 1.25rem;font-size:0.9rem;line-height:1.6; color: #94a3b8;
+    }
+    @media (min-width: 640px) {
+      p.input-page-subtitle { font-size: 1rem; }
+    }
+
+    .input-container {
+      perspective: 1000px;
+    }
+
+    textarea {
+      width:100%; min-height:140px; max-height: 220px; resize:vertical;
+      padding:1.5rem; font-size:0.95rem; line-height: 1.65; color:#F3F4F6;
+      border-radius:20px; border:1px solid rgba(255, 255, 255, 0.08);
+      background:rgba(30, 41, 59, 0.5);
+      outline:none;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      -webkit-appearance: none;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    textarea::placeholder {
+      color: #475569;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+    textarea:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: rgba(6, 182, 212, 0.4);
+      background: rgba(30, 41, 59, 0.7);
+      box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.15), 0 8px 10px -6px rgba(6, 182, 212, 0.1);
+    }
+
+    textarea:focus {
+      transform: translateY(-2px) scale(1.01);
+      border-color: #06B6D4;
+      background: rgba(30, 41, 59, 0.8);
+      box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.2), 0 12px 30px -10px rgba(0,0,0,0.5);
+    }
+
+    textarea:focus::placeholder {
+      opacity: 0.3;
+    }
+
+    button#cta{
+      display: block;
+      width: 100%;
+      margin-top:1.5rem; padding:1rem 1.75rem; cursor:pointer; outline:none;
+      border:none; border-radius:18px; font-size:1.05rem; font-weight:700;
+      background:#06B6D4;
+      color:#0f172a;
+      transition: all 0.3s cubic-bezier(.25,.8,.5,1);
+      position: relative;
+    }
+    button#cta:hover:not(:disabled){
+      transform:translateY(-3px);
+      box-shadow:0 15px 30px rgba(6, 182, 212, 0.35);
+      background: #22d3ee;
+    }
+    button#cta:active:not(:disabled){
+      transform:translateY(-1px);
+    }
+    button#cta:disabled {
+      background-color: #1e293b;
+      color: #475569;
+      cursor: not-allowed;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    @keyframes gradient-x {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .animate-gradient-x {
+      background-size: 200% 200%;
+      animation: gradient-x 3s ease infinite;
+    }
+  </style>
+  <script>
+    window.process = { env: { API_KEY: "" } };
+    
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bg-dark-primary': '#0f172a',
+            'surface-dark-primary': '#1e293b',
+            'surface-dark-secondary': '#334155',
+            'text-light-primary': '#f8fafc',
+            'text-light-secondary': '#94a3b8',
+            'accent-primary': '#06b6d4',
+            'accent-primary-hover': '#22d3ee',
+            'border-dark-primary': '#334155',
+            'border-dark-secondary': '#475569',
+            'rose-bg-dark': '#4c0519',
+            'rose-border-dark': '#be123c',
+          },
+          fontFamily: {
+            sans: ['Pretendard', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@1.1.0",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "gsap": "https://esm.sh/gsap@3.12.5",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+</head>
+<body class="bg-bg-dark-primary text-text-light-primary antialiased selection:bg-accent-primary selection:text-gray-900">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "Scope AI",
+  "description": "An application that uses AI to analyze business ideas across various dimensions like SWOT, scalability, market reaction, and feasibility, providing structured feedback.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
