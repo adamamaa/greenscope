@@ -17,13 +17,17 @@ const FeatureComparisonMatrix: React.FC<FeatureComparisonMatrixProps> = ({ data 
 
   const { competitorNames, features } = data;
 
+  // 기호 전용 렌더링 함수
   const renderCellValue = (value: string) => {
-    let colorClass = 'text-text-light-primary';
-    const lower = value.toLowerCase();
-    if (value === 'O' || lower === 'yes' || value === '제공' || value === '상') colorClass = 'text-green-400 font-bold';
-    else if (value === 'X' || lower === 'no' || value === '미제공' || value === '하') colorClass = 'text-red-400 font-bold';
-    else if (value === '△' || lower === 'partial' || value === '부분 제공' || value === '중') colorClass = 'text-yellow-400 font-bold';
-    return <span className={colorClass}>{value}</span>;
+    // 값이 문자열로 들어오더라도 기호가 포함되어 있는지 확인하여 스타일링
+    const trimmed = value.trim();
+    
+    if (trimmed.includes('O')) return <span className="text-green-400 font-black text-lg">O</span>;
+    if (trimmed.includes('X')) return <span className="text-red-400 font-black text-lg">X</span>;
+    if (trimmed.includes('△')) return <span className="text-yellow-400 font-black text-lg">△</span>;
+    
+    // Fallback if AI sends something else, though prompt forbids it
+    return <span className="text-text-light-primary text-xs">{value}</span>;
   };
 
   return (
@@ -53,10 +57,10 @@ const FeatureComparisonMatrix: React.FC<FeatureComparisonMatrixProps> = ({ data 
           </tbody>
         </table>
       </div>
-        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-text-light-secondary/60 italic">
-            <p><span className="text-green-400 font-bold">O</span> 제공</p>
-            <p><span className="text-red-400 font-bold">X</span> 미제공</p>
-            <p><span className="text-yellow-400 font-bold">△</span> 부분</p>
+        <div className="mt-4 flex flex-wrap justify-end gap-x-6 gap-y-1 text-[11px] text-text-light-secondary/80 border-t border-border-dark-secondary pt-3">
+            <div className="flex items-center gap-1"><span className="text-green-400 font-bold text-sm">O</span> 제공</div>
+            <div className="flex items-center gap-1"><span className="text-yellow-400 font-bold text-sm">△</span> 부분</div>
+            <div className="flex items-center gap-1"><span className="text-red-400 font-bold text-sm">X</span> 미제공</div>
         </div>
     </div>
   );

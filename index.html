@@ -68,7 +68,8 @@
 
     textarea {
       width:100%; min-height:140px; max-height: 220px; resize:vertical;
-      padding:1.5rem; font-size:0.95rem; line-height: 1.65; color:#F3F4F6;
+      padding: 3.5rem 2.5rem 2.5rem; 
+      font-size:0.95rem; line-height: 1.65; color:#F3F4F6;
       border-radius:20px; border:1px solid rgba(255, 255, 255, 0.08);
       background:rgba(30, 41, 59, 0.5);
       outline:none;
@@ -137,6 +138,21 @@
       background-size: 200% 200%;
       animation: gradient-x 3s ease infinite;
     }
+
+    .stagger-item {
+      animation: fadeUp 0.6s cubic-bezier(0.2,0.8,0.4,1) backwards;
+    }
+    
+    .shimmer {
+      background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite linear;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
   </style>
   <script>
     window.process = { env: { API_KEY: "" } };
@@ -159,6 +175,20 @@
           },
           fontFamily: {
             sans: ['Pretendard', 'sans-serif'],
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.9s cubic-bezier(0.2, 0.8, 0.4, 1) 0.25s both',
+            'gradient-x': 'gradient-x 3s ease infinite',
+          },
+          keyframes: {
+            fadeUp: {
+              'from': { opacity: '0', transform: 'translateY(40px)' },
+              'to': { opacity: '1', transform: 'translateY(0)' },
+            },
+            'gradient-x': {
+              '0%, 100%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' },
+            }
           }
         }
       }

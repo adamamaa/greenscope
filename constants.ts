@@ -1,7 +1,7 @@
 
 import { TabKey, TabItem, AnalysisResult, PyramidLayerContent, CustomerJourneyStage, StarRatingReaction, ConcentricCircleLayerData } from './types';
 
-export const API_MODEL_NAME = 'gemini-3-pro-preview';
+export const API_MODEL_NAME = 'gemini-3-flash-preview';
 
 export const TABS: TabItem[] = [
   { key: TabKey.SWOT, label: "SWOT", icon: undefined, color: "", activeColor: "accent-primary", categoryTitle: "SWOT" },

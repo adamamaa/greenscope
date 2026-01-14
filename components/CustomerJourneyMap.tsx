@@ -37,10 +37,11 @@ const CustomerJourneyMap: React.FC<CustomerJourneyMapProps> = ({ stages }) => {
     <div className="bg-surface-dark-secondary p-4 md:p-6 rounded-lg shadow-soft border border-border-dark-primary">
       <h3 className={`text-xl md:text-2xl font-semibold ${stageTitleColor} mb-6`}>고객 여정 맵</h3>
       
-      {/* Container: Vertical on Mobile, Horizontal on Desktop */}
-      <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 overflow-x-auto no-scrollbar md:pb-4">
+      {/* Scrollable Container with Custom Scrollbar */}
+      {/* Added `pb-6` for scrollbar space and custom scrollbar classes */}
+      <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 overflow-x-auto pb-6 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800/30 hover:scrollbar-thumb-accent-primary/50 transition-colors">
         {stages.map((stage, index) => (
-          <div key={index} className="flex flex-col md:flex-row items-stretch flex-grow">
+          <div key={index} className="flex flex-col md:flex-row items-stretch flex-grow min-w-[300px]">
             <div className={`bg-gray-800/50 p-4 md:p-5 rounded-xl shadow-sm w-full md:w-72 lg:w-80 flex-shrink-0 border border-border-dark-secondary relative overflow-hidden`}>
               {/* Background Step Number */}
               <div className="absolute top-[-10px] right-[-5px] text-5xl font-black text-white/5 pointer-events-none">
@@ -72,7 +73,12 @@ const CustomerJourneyMap: React.FC<CustomerJourneyMapProps> = ({ stages }) => {
             )}
           </div>
         ))}
+        {/* Spacer for padding at the end of scroll */}
+        <div className="min-w-[20px] h-1 shrink-0"></div>
       </div>
+      <p className="text-[10px] text-text-light-secondary/60 mt-2 text-center md:text-right italic">
+        * 가로로 스크롤하여 전체 여정을 확인하세요.
+      </p>
     </div>
   );
 };
